@@ -17,7 +17,7 @@
         <div class="row">
 
           <div class="col-3 templateux-logo">
-            <a href="index.html" class="animsition-link"><img src="images/logo-w.png" alt="Image" class="img-fluid"></a>
+            <a href="index.html" class="animsition-link"><img src="images/logo-t.png" alt="Image" class="img-fluid"></a>
           </div>
           <nav class="col-9 site-nav">
             <button class="d-block d-md-none hamburger hamburger--spin templateux-toggle templateux-toggle-light ml-auto templateux-toggle-menu" data-toggle="collapse" data-target="#mobile-menu" aria-controls="mobile-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -30,7 +30,7 @@
               <li class="active">
                 <a href="index.html" class="animsition-link">Home Care Services</a>
               </li>
-              <li><a href="blog-single.html" class="animsition-link">Rates and Hours</a></li>
+              <li><a href="rateandhours.html" class="animsition-link">Rates and Hours</a></li>
               <li><a href="contact.html" class="animsition-link">Home Care Jobs</a></li>
             </ul> <!-- .templateux-menu -->
 
@@ -66,39 +66,91 @@
                     <h5>Call 786-768-3325</h5>
                   </div>
                   <div class="media-body">
-          <form id="fs-frm" name="complaint-form" accept-charset="utf-8" action="https://formspree.io/YOUR_EMAIL_HERE" method="post">
-            <fieldset id="fs-frm-inputs">
-              <div class="form-check">
-                <label class="form-check-label" for="radio1">
-                  <input type="radio" class="form-check-input" id="radio1" name="optradio" value="option1" checked>I am interested in home care
-                </label>
-              </div>
-              <div class="form-check mb-3">
-                <label class="form-check-label" for="radio2">
-                  <input type="radio" class="form-check-input" id="radio2" name="optradio" value="option2">I am interested in a job
-                </label>
-              </div>
-              <div class="form-group">
-                <label for="full-name">Full Name</label>
-                <input class="form-control form-control-sm" type="text" name="name" id="full-name" placeholder="First and Last" required="">
-              </div>
-              <div class="form-group">
-                <label for="email-address">Email Address</label>
-                <input class="form-control form-control-sm" type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="">
-              </div>
-              <div class="form-group">
-                <label for="telephone">Telephone Number (Optional)</label>
-                <input class="form-control form-control-sm" type="telephone" name="telephone" id="telephone" placeholder="(555) 555-5555">
-              </div>
-              <div class="form-group">
-                <label for="complaint">Message</label>
-                <textarea class="form-control" rows="6" name="complaint" id="complaint" placeholder="Your message here" required=""></textarea>
-              </div>
+                    <!-- modify this form HTML and place wherever you want your form -->
 
-              <input type="hidden" name="_subject" id="email-subject" value="Complaint Form Submission">
-            </fieldset>
-            <input class="btn btn-primary" type="submit" value="Send">
-          </form>
+                  <form id="my-form"
+                    action="https://formspree.io/xeqrygkv"
+                    method="POST"
+                  >
+                     <div class="form-check">
+                        <label class="form-check-label" for="radio1">
+                          <input type="radio" class="form-check-input" id="radio1" name="optradio" value="I am interested in home care" checked>I am interested in home care
+                        </label>
+                      </div>
+                      <div class="form-check mb-3">
+                        <label class="form-check-label" for="radio2">
+                          <input type="radio" class="form-check-input" id="radio2" name="optradio" value="I am interested in a job">I am interested in a job
+                        </label>
+                      </div>
+                      <div class="form-group">
+                        <label for="full-name">Full Name</label>
+                        <input class="form-control form-control-sm" type="text" name="name" id="full-name" placeholder="First and Last" required="">
+                      </div>
+                      <div class="form-group">
+                        <label for="email-address">Email Address</label>
+                        <input class="form-control form-control-sm" type="email" name="_replyto" id="email-address" placeholder="email@domain.tld" required="">
+                      </div>
+                      <div class="form-group">
+                        <label for="telephone">Telephone Number (Optional)</label>
+                        <input class="form-control form-control-sm" type="telephone" name="telephone" id="telephone" placeholder="(555) 555-5555">
+                      </div>
+                      <div class="form-group">
+                        <label for="complaint">Message</label>
+                        <textarea class="form-control" rows="6" name="complaint" id="complaint" placeholder="Your message here" required=""></textarea>
+                      </div>
+                      <button id="my-form-button" class="btn btn-primary">Send</button>
+                      <p id="my-form-status"></p>
+                    </form>
+
+                    <!-- Place this script at the end of the body tag -->
+
+                    <script>
+                      window.addEventListener("DOMContentLoaded", function() {
+
+                        // get the form elements defined in your form HTML above
+                        
+                        var form = document.getElementById("my-form");
+                        var button = document.getElementById("my-form-button");
+                        var status = document.getElementById("my-form-status");
+
+                        // Success and Error functions for after the form is submitted
+                        
+                        function success() {
+                          form.reset();
+                          button.style = "display: none ";
+                          status.innerHTML = "Thanks! We will reply as soon as possible.";
+                        }
+
+                        function error() {
+                          status.innerHTML = "Oops! There was a problem.";
+                        }
+
+                        // handle the form submission event
+
+                        form.addEventListener("submit", function(ev) {
+                          ev.preventDefault();
+                          var data = new FormData(form);
+                          ajax(form.method, form.action, data, success, error);
+                        });
+                      });
+                      
+                      // helper function for sending an AJAX request
+
+                      function ajax(method, url, data, success, error) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open(method, url);
+                        xhr.setRequestHeader("Accept", "application/json");
+                        xhr.onreadystatechange = function() {
+                          if (xhr.readyState !== XMLHttpRequest.DONE) return;
+                          if (xhr.status === 200) {
+                            success(xhr.response, xhr.responseType);
+                          } else {
+                            error(xhr.status, xhr.response, xhr.responseType);
+                          }
+                        };
+                        xhr.send(data);
+                      }
+                    </script>
                   </div>
                 </div> <!-- .block-icon-1 -->
               </div>
@@ -138,30 +190,19 @@
           New Horizon Caregiver's benefit from initial and on-going job training, flexible scheduling, and the opportunity to meet new people and develop meaningful relationships.
         </p>
         <div class="row mb-5">
-          <div class="col-md-7 pr-md-7 mb-5">
-            <form action="#" method="post">
-              <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name">
-              </div>
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email">
-              </div>
-              <div class="form-group">
-                <label for="message">Message</label>
-                <textarea name="message" id="message" cols="30" rows="10" class="form-control"></textarea>
-              </div>
-              <div class="form-group">
-                <input type="submit" class="btn btn-primary py-3 px-5" value="Send Message">
-              </div>
-            </form>
-          </div>
-          <div class="col-md-5">
-            <div class="media block-icon-1 d-block text-center">
+        <div class="col-12 text-center mb-5">
+          <h2>Find US</h2>
+        </div>
+        <div class="col-6 text-center">
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d224.5615620491986!2d-80.33846922011024!3d25.771059236749817!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88d9b91e9847b999%3A0x84a33a65dd1cbc68!2s175%20Fontainebleau%20Blvd%2C%20Miami%2C%20FL%2033172%2C%20EE.%20UU.!5e0!3m2!1ses-419!2sdo!4v1599666878880!5m2!1ses-419!2sdo" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </div>
+
+        <div class="col-6 text-center">
+          <img src="images/logo-t.png" alt="Image" class="img-fluid mb-3" width="200px">
+          <div class="media block-icon-1 d-block text-center">
               <div class="icon mb-3"><span class="ion-ios-location-outline"></span></div>
               <div class="media-body">
-                <h3 class="h5 mb-4">175 Fontainebleau Blvd  Suite 2J1, Miami FL 33172</h3>
+                <h3 class="h5 mb-4">175 Fontainebleau Blvd <br> Suite 2J1, Miami FL 33172</h3>
               </div>
             </div> <!-- .block-icon-1 -->
 
@@ -178,85 +219,59 @@
                 <h3 class="h5 mb-4">contact@newhorizonhome.info </h3>
               </div>
             </div> <!-- .block-icon-1 -->
-
-          </div>
-        </div> <!-- .row -->
+        </div>
+      </div>
 
       </div>
     </div> <!-- .templateux-section -->
 
     <footer class="templateux-footer bg-light">
-      <div class="container">
+  <div class="container">
 
-        <div class="row mb-5">
-          <div class="col-md-4 pr-md-5">
+    <div class="row">
+      <div class="col-md-5 pr-md-5">
+        <div class="block-footer-widget">
+          <h3>About US</h3>
+          <p>We focus on providing the best home health care for your loved ones. We provide the utmost personal care and companionship in the comfort of their home. We assist with basic daily activities such as eating, bathing and assistance with medication reminders. We provide peace of mind and tranquility.</p>
+        </div>
+      </div>
+
+      <div class="col-md-7">
+        <div class="row">
+          <div class="col-md-6">
             <div class="block-footer-widget">
-              <h3>About</h3>
-              <p>A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
+              <h3 class="invisible">About</h3>
+              <p>We have in home trained aides to offer the best care possible.</p>
+              <p>The well being of the client is our main concern. We strive for excellent personal care and companion services.</p>
             </div>
           </div>
+          
 
-          <div class="col-md-8">
-            <div class="row">
-              <div class="col-md-3">
-                <div class="block-footer-widget">
-                  <h3>Learn More</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">How it works?</a></li>
-                    <li><a href="#">Useful Tools</a></li>
-                    <li><a href="#">Pricing</a></li>
-                    <li><a href="#">Sitemap</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="block-footer-widget">
-                  <h3>Support</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">FAQ</a></li>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Help Desk</a></li>
-                    <li><a href="#">Knowledgebase</a></li>
-                  </ul>
-                </div>
-              </div>
-              <div class="col-md-3">
-                <div class="block-footer-widget">
-                  <h3>About Us</h3>
-                  <ul class="list-unstyled">
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Terms of Service</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                  </ul>
-                </div>
-              </div>
-
-              <div class="col-md-3">
-                <div class="block-footer-widget">
-                  <h3>Connect With Us</h3>
-                  <ul class="list-unstyled block-social">
-                    <li><a href="#" class="p-1"><span class="icon-facebook-square"></span></a></li>
-                    <li><a href="#" class="p-1"><span class="icon-twitter"></span></a></li>
-                    <li><a href="#" class="p-1"><span class="icon-github"></span></a></li>
-                  </ul>
-                </div>
-              </div>
-            </div> <!-- .row -->
-
+          <div class="col-md-6 text-right">
+            <div class="block-footer-widget">
+              <h3>Connect With Us</h3>
+              <ul class="list-unstyled block-social">
+                <li><a href="#" class="p-1"><span class="icon-facebook-square"></span></a></li>
+                <li><a href="#" class="p-1"><span class="icon-twitter"></span></a></li>
+                <li><a href="#" class="p-1"><span class="icon-github"></span></a></li>
+              </ul>
+            </div>
           </div>
         </div> <!-- .row -->
 
-        <div class="row pt-5 text-center invisible">
+      </div>
+    </div> <!-- .row -->
+
+    <div class="row pt-5 text-center">
           <div class="col-md-12 text-center"><p>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
+            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
           </p></div>
         </div> <!-- .row -->
 
-      </div>
-    </footer> <!-- .templateux-footer -->
+  </div>
+</footer> <!-- .templateux-footer -->
 
 
   </div> <!-- .js-animsition -->
